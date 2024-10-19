@@ -4,5 +4,4 @@
 
 int main(void){
   printf("Hello CMAKE!");
-  int *new = malloc(8 * sizeof(*new));
 }

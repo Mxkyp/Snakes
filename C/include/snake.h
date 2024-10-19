@@ -2,5 +2,4 @@
 #define SNAKE_H_
 
 
-
 #endif // SNAKE_H_
