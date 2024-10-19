@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 29,
+    "patch": 2
+  },
+  "configurePresets": [
+    {
+      "name": "gcc-dev",
+      "displayName": "GCC",
+      "description": "Development build options for GCC",
+      "generator": "Unix Makefiles",
+      "binaryDir": "./build",
+      "cacheVariables": {
+        "CMAKE_C_FLAGS": " -g -Wall -Wextra  -Wno-unused-parameter -fsanitize=address -fsanitize=undefined -static-libasan"
+      }
+    },
+    {
+      "name": "clang",
+      "displayName": "Clang",
+      "description": "Default build options for Clang",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-Winconsistent-missing-override -Winconsistent-missing-destructor-override"
+      }
+    }
+  ]
+}
