@@ -1,9 +1,6 @@
 #ifndef RENDER_H_
 #define RENDER_H_
 #include <raylib.h>
-#define W_HEIGHT 500
-#define W_WIDTH  800
-#define CUBE_SIZE 25
 
 
 void createWindow(void);

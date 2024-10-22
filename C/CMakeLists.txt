@@ -17,15 +17,16 @@ set(LOGIC "${SRC}logic.c")
 set(H_SNAKE "${INCLUDE}snake.h")
 set(H_RENDER "${INCLUDE}render.h")
 set(H_LOGIC "${INCLUDE}logic.h")
+set(H_CONSTANS "${INCLUDE}constans.h")
 
-add_executable(${GAME} ${MAIN} ${SNAKE} ${LOGIC} ${RENDER} ${H_LOGIC} ${H_SNAKE} ${H_RENDER})
+add_executable(${GAME} ${MAIN} ${SNAKE} ${LOGIC} ${RENDER} ${H_LOGIC} ${H_CONSTANTS} ${H_SNAKE} ${H_RENDER})
 target_link_libraries(${GAME} raylib)
 
 ##TEST_SUITE
 set(TEST "test")
 set(T_SNAKE "${T_SRC}testSnake.c")
 
-add_executable(${TEST} ${T_SNAKE} ${SNAKE} ${RENDER} ${H_SNAKE} ${H_RENDER})
+add_executable(${TEST} ${T_SNAKE} ${SNAKE} ${LOGIC} ${RENDER} ${H_LOGIC} ${H_CONSTANTS} ${H_SNAKE} ${H_RENDER})
 target_link_libraries(${TEST} raylib)
 target_link_libraries(${TEST} criterion)
 add_test(${TEST} test)

@@ -1,4 +1,5 @@
 #include "../include/render.h"
+#include "../include/constans.h"
 #include <raylib.h>
 #include <raymath.h>
 #include <rlgl.h>
@@ -23,7 +24,7 @@ void drawGrid(void){
 }
 
 void renderSnake(Vector2 position){
-  static Vector2 snake_dim = {25, 25};
+  static Vector2 snake_dim = {CUBE_SIZE, CUBE_SIZE};
   DrawRectangleV(position, snake_dim, PURPLE);
 }
 

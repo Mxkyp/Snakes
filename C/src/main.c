@@ -1,10 +1,10 @@
 #include "../include/snake.h"
 #include "../include/render.h"
 #include "../include/logic.h"
+#include "../include/constans.h"
 #include "raylib.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define SECONDS_BEFORE_MOVE 0.5
 
 int main(void){
   createWindow();
