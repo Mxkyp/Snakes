@@ -11,11 +11,12 @@ typedef struct Timer {
 
 typedef struct snake_s Snake;
 struct snake_s{
- Vector2 speed;
- Direction last_move_direction;
- Vector2 position;
- Snake *next;
- Snake *before;
+    Vector2 speed;
+    Direction last_move_direction;
+    Vector2 position;
+    Timer move_delay;
+    Snake *next;
+    Snake *before;
 };
 
 typedef struct fruit_s Fruit;
@@ -46,8 +47,8 @@ void updateLastMoveDirection(Snake *snake);
 // if user want do turn 180 degrees do nothing
 void changeDirection(Snake *snake);
 
-//updates snake position vector, based on its speed vector
-void updateSnake(Timer *clock, Snake *snake);
+//before moving snake, checks whether the move_delay time has passed
+void updateSnake(Snake *snake);
 
 //check if a given point is on any part of the snake,
 //if yes return true

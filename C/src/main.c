@@ -11,8 +11,6 @@ int main(void){
 
   Snake snake = initSnake();
   Fruit fruit = initFruit();
-  Timer move_timer;
-  StartTimer(&move_timer, SECONDS_BEFORE_MOVE);
 
   while(!WindowShouldClose()){
    BeginDrawing();
@@ -23,7 +21,7 @@ int main(void){
    renderObject(fruit.position);
 
    changeDirection(&snake);
-   updateSnake(&move_timer, &snake);
+   updateSnake(&snake);
    renderObject(snake.position);
    EndDrawing();
    }

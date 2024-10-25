@@ -21,6 +21,8 @@ Snake initSnake(void){
   Snake new = {.speed = {CUBE_SIZE, 0}, .last_move_direction = RIGHT,
                .position = { 16 * CUBE_SIZE, 8 * CUBE_SIZE},
                .next = NULL, .before = NULL};
+
+  StartTimer(&new.move_delay, SECONDS_BEFORE_MOVE); // set the time between each time the snake moves;
   return new;
 }
 
@@ -68,8 +70,8 @@ void changeDirection(Snake *snake){
   }
 }
 
-void updateSnake(Timer *clock, Snake *snake){
-     if(TimerDone(*clock)){ //check if the time between moves has elapsed
+void updateSnake(Snake *snake){
+     if(TimerDone(snake->move_delay)){ //check if the time between moves has elapsed
         updateLastMoveDirection(snake);
         snake->position.y += snake->speed.y;
         snake->position.x += snake->speed.x;
@@ -86,7 +88,7 @@ void updateSnake(Timer *clock, Snake *snake){
           snake->position.x = W_WIDTH - CUBE_SIZE;
         }
 
-        StartTimer(clock, SECONDS_BEFORE_MOVE); //restart the move timer
+        StartTimer(&snake->move_delay, SECONDS_BEFORE_MOVE); //restart the move timer
      }
 }
 
