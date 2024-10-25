@@ -16,19 +16,16 @@ void createWindow(void){
 void drawGrid(void){
   rlPushMatrix();
 
-  rlTranslatef(0, 32 * CUBE_SIZE, 0);
+  rlTranslatef(0, 20 * CUBE_SIZE, 0);
   rlRotatef(90, 1, 0, 0);
-  DrawGrid(100, CUBE_SIZE);
+  DrawGrid(100 , CUBE_SIZE);
 
  rlPopMatrix();
 }
 
-void renderSnake(Vector2 position){
+void renderObject(Vector2 position){
   static Vector2 snake_dim = {CUBE_SIZE, CUBE_SIZE};
   DrawRectangleV(position, snake_dim, PURPLE);
 }
 
 
-void renderFruit(void){
-
-}

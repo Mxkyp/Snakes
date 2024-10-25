@@ -2,7 +2,8 @@
 #include "../include/constans.h"
 #include "raylib.h"
 #include <stdlib.h>
-
+#include <stdbool.h>
+#include <time.h>
 void StartTimer(Timer *timer, double lifetime){
     timer->startTime = GetTime();
     timer->lifeTime = lifetime;
@@ -23,6 +24,31 @@ Snake initSnake(void){
   return new;
 }
 
+Fruit initFruit(void){
+  Fruit fruit;
+
+  StartTimer(&fruit.timer, FRUIT_LIFETIME);
+  fruit.position.y = (rand() % W_HEIGHT_IN_CUBES) * CUBE_SIZE;
+  fruit.position.x = (rand() % W_WIDTH_IN_CUBES) * CUBE_SIZE;
+
+  return fruit;
+}
+
+
+void setFruitPosition(Snake *snake, Fruit *fruit){
+     if(TimerDone(fruit->timer)){ //check if the time between moves has elapsed
+        srand(time(NULL));
+
+        do{
+          fruit->position.y = (rand() % W_HEIGHT_IN_CUBES) * CUBE_SIZE;
+          fruit->position.x = (rand() % W_WIDTH_IN_CUBES) * CUBE_SIZE;
+        }while(checkIfAtSnake(*snake, fruit->position));
+
+        StartTimer(&fruit->timer, FRUIT_LIFETIME); //restart the move timer
+     }
+}
+
+
 void changeDirection(Snake *snake){
   if(IsKeyPressed(KEY_UP) &&  snake->last_move_direction != DOWN){
     snake->speed.x = 0;
@@ -42,6 +68,41 @@ void changeDirection(Snake *snake){
   }
 }
 
+void updateSnake(Timer *clock, Snake *snake){
+     if(TimerDone(*clock)){ //check if the time between moves has elapsed
+        updateLastMoveDirection(snake);
+        snake->position.y += snake->speed.y;
+        snake->position.x += snake->speed.x;
+
+        if(snake->position.y >= W_HEIGHT){
+          snake->position.y = 0;
+        } else if (snake->position.y < 0){
+          snake->position.y = W_HEIGHT - CUBE_SIZE;
+        }
+
+        if(snake->position.x >= W_WIDTH){
+          snake->position.x = 0;
+        } else if (snake->position.x < 0){
+          snake->position.x = W_WIDTH - CUBE_SIZE;
+        }
+
+        StartTimer(clock, SECONDS_BEFORE_MOVE); //restart the move timer
+     }
+}
+
+bool checkIfAtSnake(Snake snake, Vector2 point){
+  Snake *s = &snake;
+
+  while(s){
+    if(s->position.y == point.y && s->position.x == point.x){
+      return true;
+    }
+    s = s->next;
+  }
+
+  return false;
+}
+
 void updateLastMoveDirection(Snake *snake){
   if(snake->speed.y == -CUBE_SIZE && snake->speed.x == 0){
     snake->last_move_direction = UP;
@@ -55,27 +116,4 @@ void updateLastMoveDirection(Snake *snake){
   else if(snake->speed.y == 0 && snake->speed.x == CUBE_SIZE){
     snake->last_move_direction = RIGHT;
   }
-}
-
-
-void updateSnake(Timer *clock, Snake *snake){
-     if(TimerDone(*clock)){
-        updateLastMoveDirection(snake);
-        snake->position.y += snake->speed.y;
-        snake->position.x += snake->speed.x;
-
-        if(snake->position.y > W_HEIGHT){
-          snake->position.y = 0;
-        } else if (snake->position.y < 0){
-          snake->position.y = W_HEIGHT;
-        }
-
-        if(snake->position.x > W_WIDTH){
-          snake->position.x = 0;
-        } else if (snake->position.x < 0){
-          snake->position.x = W_WIDTH;
-        }
-
-        StartTimer(clock, SECONDS_BEFORE_MOVE);
-     }
 }

@@ -10,17 +10,21 @@ int main(void){
   createWindow();
 
   Snake snake = initSnake();
-  Timer clock;
-  StartTimer(&clock, SECONDS_BEFORE_MOVE);
+  Fruit fruit = initFruit();
+  Timer move_timer;
+  StartTimer(&move_timer, SECONDS_BEFORE_MOVE);
 
   while(!WindowShouldClose()){
    BeginDrawing();
    ClearBackground(RAYWHITE);
    drawGrid();
 
-   changeDirection(&snake.speed);
-   updateSnake(&clock, &snake);
-   renderSnake(snake.position);
+   setFruitPosition(&snake, &fruit);
+   renderObject(fruit.position);
+
+   changeDirection(&snake);
+   updateSnake(&move_timer, &snake);
+   renderObject(snake.position);
    EndDrawing();
    }
 
