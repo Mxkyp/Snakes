@@ -26,6 +26,51 @@ struct fruit_s{
 };
 
 
+// return default snake config
+Snake initSnake(void);
+
+// return default fruit config
+Fruit initFruit(void);
+
+// first updates directon, then checks if snakeGrows
+// then updates the snake position
+void snakeHandler(Snake *snake, Fruit* fruit);
+
+// if a FRUIT_LIFETIME has elapsed, respawn fruit
+void fruitHandler(Snake *snake, Fruit *fruit);
+
+// check for keypresses, if any arrow keys were pressed adjust snakeSpeed vector
+// if user want do turn 180 degrees do nothing
+void changeDirection(Snake *snake);
+
+// adds a new snake cell if snake.position == fruit.position
+void growSnake(Snake *snake, Fruit *fruit);
+
+// move each snake cell to the postion of the cell before,
+// move head
+void updateSnake(Snake *snake);
+
+// pick a random new position(thats not on the snake) for fruit;
+void respawnFruit(Snake* snake, Fruit *fruit);
+
+void updateLastMoveDirection(Snake *snake);
+
+//check if a given point is on any part of the snake,
+//if yes return true
+bool checkIfAtSnake(Snake snake, Vector2 point);
+
+// checks whether snake's head is on the fruit(their cooridantes are the same)
+// returns true if yes
+bool checkIfFruitWasEaten(Snake *snake, Fruit *fruit);
+///////////////////////////////
+////////////////MINOR FUNCTIONS
+////////////////////////////////
+////////////////
+///////////////////////////////
+////////////////BASIC UTILS
+////////////////////////////////
+void copyVector(Vector2 *dst, Vector2 *src);
+
 // gets the current time, and sets the expected lifetime
 void StartTimer(Timer *timer, double lifetime);
 
@@ -34,27 +79,4 @@ bool TimerDone(Timer timer);
 
 // return elapsed time in seconds since StartTimer
 double GetElapsed(Timer timer);
-
-// return default snake config
-Snake initSnake(void);
-
-// return default fruit config
-Fruit initFruit(void);
-
-void updateLastMoveDirection(Snake *snake);
-
-// check for keypresses, if any arrow keys were pressed adjust snakeSpeed vector
-// if user want do turn 180 degrees do nothing
-void changeDirection(Snake *snake);
-
-//before moving snake, checks whether the move_delay time has passed
-void updateSnake(Snake *snake);
-
-//check if a given point is on any part of the snake,
-//if yes return true
-bool checkIfAtSnake(Snake snake, Vector2 point);
-
-// if a FRUIT_LIFETIME has elapsed, randomly pick
-// a new position for it, that is not on the snake;
-void setFruitPosition(Snake *snake, Fruit *fruit);
 #endif // LOGIC_H_

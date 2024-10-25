@@ -17,12 +17,12 @@ int main(void){
    ClearBackground(RAYWHITE);
    drawGrid();
 
-   setFruitPosition(&snake, &fruit);
-   renderObject(fruit.position);
+   fruitHandler(&snake, &fruit);
+   renderObject(fruit.position, MAGENTA);
 
    changeDirection(&snake);
-   updateSnake(&snake);
-   renderObject(snake.position);
+   growSnake(&snake, &fruit);
+   renderSnake(&snake);
    EndDrawing();
    }
 
